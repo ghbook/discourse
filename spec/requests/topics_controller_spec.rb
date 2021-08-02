@@ -1663,6 +1663,7 @@ RSpec.describe TopicsController do
         put "/t/#{topic.slug}/#{topic.id}.json", params: { title: title_with_url }
 
         expect(response.status).to eq(403)
+        expect(response.body).to include(I18n.t('links_in_title_require_trust'))
       end
 
       it "allows TL1 users to put urls into the title" do

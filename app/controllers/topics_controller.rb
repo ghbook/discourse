@@ -319,7 +319,8 @@ class TopicsController < ApplicationController
     guardian.ensure_can_edit!(topic)
 
     if UrlHelper.contains_url?(params[:title]) && !guardian.can_put_urls_in_topic_title?
-      raise Discourse::InvalidAccess
+      message = :links_in_title_require_trust
+      raise Discourse::InvalidAccess.new(message, nil, custom_message: message)
     end
 
     if params[:category_id] && (params[:category_id].to_i != topic.category_id.to_i)
